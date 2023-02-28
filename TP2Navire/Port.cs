@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GestionNavire.Exceptions;
+using Navire.Classesmetier;
 
 namespace Navire.Classesmetier
 {
@@ -24,15 +26,42 @@ namespace Navire.Classesmetier
 
         public void EnregistrerArriver(Navire navire)
         {
-            if (!(this.nbNavireMax == this.navires.Count))
+            try
             {
-                this.navires.Add(navire.Imo,navire);
+                if (this.navires.Count < this.nbNavireMax)
+                {
+                    this.navires.Add(navire.Imo, navire);
+                }
+                else
+                {
+                    throw new GestionPortException("Ajout impossible,le port est complet");
+                }
             }
-            else
+            catch (ArgumentException)
             {
-                throw new Exception("Ajout impossible,le port est complet");
+                throw new GestionPortException("Le navire " + navire.Imo + " est déjà enregistré");
+            }
+        }
+        
+        public void EnregistrerDepart(String imo)
+        {
+            try
+            {
+                this.navires.Remove(imo);
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new GestionPortException("Impossible d'enregistrer le départ du navire "+ imo + ", il n'est pas dans le port");
             }
         }
     }
+}
 
+namespace GestionNavire.Exceptions
+{
+    class GestionPortException : Exception
+    {
+        public GestionPortException(string message)
+            : base("Erreur de : " + Environment.UserName + " le " + DateTime.Now.ToLocalTime() + "\n" + message) { }
+    }
 }
