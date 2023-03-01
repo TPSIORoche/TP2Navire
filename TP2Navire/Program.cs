@@ -49,11 +49,9 @@ namespace Navire.Application
                 //{ Console.WriteLine(ex.Message); }
 
                 //TesterDecharger();
-                TesterInstanciationsStockage();
-
-                Console.WriteLine("Fin normale du programme");
+                //TesterInstanciationsStockage();
             }
-            catch (GestionPortException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }

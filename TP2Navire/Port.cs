@@ -18,7 +18,7 @@ namespace Navire.Classesmetier
         public Port(string nom)
         {
             this.nom = nom;
-            this.nbNaviresMax = 5;
+            this.nbNaviresMax = 10;
             this.navires = new Dictionary<string, Navire>();
             this.stockages = new List<Stockage>();
 
@@ -73,7 +73,7 @@ namespace Navire.Classesmetier
         public void Dechargement(String imo)
         {
             Navire navire = GetNavire(imo);
-            if (navire != null && navire.LibelleFret == "Porte-conteneur")
+            if (navire != null && navire.LibelleFret == "Porte-conteneurs")
             {
                 int i = 0;
                 while (i < stockages.Count() && !navire.EstDecharge())
